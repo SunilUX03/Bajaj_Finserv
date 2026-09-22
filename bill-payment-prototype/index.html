@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Bill Discovery Flow</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="app-shell">
+
+  <!-- SCREEN 1 — Discovery Intro -->
+  <section class="screen active" id="screen1" aria-label="Discovery intro">
+    <div class="status-bar">
+      <span>9:41</span>
+      <span class="status-icons">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M2 17h2.4v-4H2v4zm4.8 2h2.4V9H6.8v10zm4.8 2h2.4V5h-2.4v14zm4.8-3h2.4v-8h-2.4v8zm4.8 3h2.4V7h-2.4v10z"/></svg>
+        <svg width="21" height="12" viewBox="0 0 24 12" fill="none" aria-hidden="true"><rect x="1" y="1" width="19" height="10" rx="2.5" stroke="currentColor" stroke-width="1.4"/><rect x="21.5" y="4" width="1.4" height="4" rx=".5" fill="currentColor"/><rect x="2.6" y="2.6" width="14.5" height="6.8" rx="1.2" fill="currentColor"/></svg>
+      </span>
+    </div>
+    <header class="app-header">
+      <button class="icon-btn" aria-label="Back" type="button">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+      </button>
+      <div class="brand">
+        <span class="brand-name"><span class="dot"></span>PayEase</span>
+        <span class="brand-caption">Powered by Bharat Connect · BBPS</span>
+      </div>
+    </header>
+
+    <div class="screen-content centered">
+      <div class="card-mock-wrap">
+        <div class="card-mock">
+          <div class="chip"></div>
+          <div class="badge-ring"></div>
+          <div class="lines"><span></span><span></span></div>
+        </div>
+      </div>
+      <h1 class="headline">Managing and paying your bills got easier and better</h1>
+      <p class="trust-line">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        15M+ people trust PayEase with their bills
+      </p>
+    </div>
+
+    <div class="screen-footer">
+      <button class="btn btn-primary" type="button" onclick="startDiscoveryFlow()">Let's add bills</button>
+    </div>
+  </section>
+
+  <!-- SCREEN 2 — Real-time fetch -->
+  <section class="screen" id="screen2" aria-label="Looking for bills">
+    <div class="screen-content centered">
+      <div class="spinner" role="status" aria-label="Loading"></div>
+      <p class="loading-text">Looking for your bills...</p>
+      <div class="discovery-list" id="discoveryList"></div>
+    </div>
+    <p class="bbps-caption">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"></rect><path d="M3 9h18"></path></svg>
+      Powered by Bharat Connect · BBPS
+    </p>
+  </section>
+
+  <!-- SCREEN 3 — Results -->
+  <section class="screen" id="screen3" aria-label="Bills found">
+    <div class="caption-bar">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"></rect><path d="M3 9h18"></path></svg>
+      Powered by Bharat Connect · BBPS
+    </div>
+    <div class="screen-content">
+      <div class="results-summary">
+        <div class="count" id="resultsCount">0/0 bills found</div>
+        <div class="sub" id="resultsSub">₹0 to be paid</div>
+      </div>
+      <div id="resultsGroups"></div>
+    </div>
+    <div class="screen-footer">
+      <button class="btn btn-primary" type="button" onclick="confirmAddAll()">Add All Bills</button>
+      <button class="btn-text" type="button" onclick="showToast('Manual bill entry — coming soon')">Add a bill manually</button>
+    </div>
+  </section>
+
+  <!-- SCREEN 4 — Setting up -->
+  <section class="screen" id="screen4" aria-label="Setting up bills">
+    <div class="screen-content centered">
+      <div class="spinner" role="status" aria-label="Loading"></div>
+      <p class="loading-text">Setting up your bills...</p>
+    </div>
+    <p class="bbps-caption">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"></rect><path d="M3 9h18"></path></svg>
+      Powered by Bharat Connect · BBPS
+    </p>
+  </section>
+
+  <!-- SCREEN 5 — Bills home -->
+  <section class="screen" id="screen5" aria-label="Bills home">
+    <div class="status-bar">
+      <span>9:41</span>
+      <span class="status-icons">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M2 17h2.4v-4H2v4zm4.8 2h2.4V9H6.8v10zm4.8 2h2.4V5h-2.4v14zm4.8-3h2.4v-8h-2.4v8zm4.8 3h2.4V7h-2.4v10z"/></svg>
+        <svg width="21" height="12" viewBox="0 0 24 12" fill="none" aria-hidden="true"><rect x="1" y="1" width="19" height="10" rx="2.5" stroke="currentColor" stroke-width="1.4"/><rect x="21.5" y="4" width="1.4" height="4" rx=".5" fill="currentColor"/><rect x="2.6" y="2.6" width="14.5" height="6.8" rx="1.2" fill="currentColor"/></svg>
+      </span>
+    </div>
+    <header class="app-header">
+      <div class="brand">
+        <span class="brand-name"><span class="dot"></span>PayEase</span>
+        <span class="brand-caption">Powered by Bharat Connect · BBPS</span>
+      </div>
+      <div class="brand-avatar" aria-hidden="true">R</div>
+    </header>
+    <div class="screen-content">
+      <div class="stat-card">
+        <div class="stat"><div class="num" id="statPending">0</div><div class="label">Pending</div></div>
+        <div class="stat"><div class="num" id="statPaid">0</div><div class="label">Paid</div></div>
+        <div class="stat"><div class="num" id="statTotal">₹0</div><div class="label">Total Due</div></div>
+      </div>
+      <div class="tabs" role="tablist">
+        <button class="tab-btn active" id="tabPending" role="tab" aria-selected="true" type="button" onclick="switchTab('pending')">Pending Bills</button>
+        <button class="tab-btn" id="tabPaid" role="tab" aria-selected="false" type="button" onclick="switchTab('paid')">Paid Bills</button>
+      </div>
+      <div id="homeList"></div>
+      <button class="view-all" type="button" onclick="showToast('Full bill history — coming soon')">View All Bills</button>
+    </div>
+  </section>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+</div>
+<script src="script.js"></script>
+</body>
+</html>
